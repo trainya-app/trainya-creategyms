@@ -8,30 +8,62 @@ export default function NewGym() {
       authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY2ODM3Njc3LCJleHAiOjE2Njk0Mjk2Nzd9.kMtMa-SeI-xpovIV9AE10-b0FdD8ECy-6MpU1TQ8OvY',
     },
   };
-  const [info, setInfo] = useState({
-    name: '', currentCapacity: '', maxCapacity: '', email: '', password: '', zipCode: '', state: '', city: '', street: '', adressNumber: '',
-  });
+  const [name, setName] = useState('');
+  const [currentCapacity, setCurrentCapacity] = useState('');
+  const [maxCapacity, setMaxCapacity] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [street, setStreet] = useState('');
+  const [adressNumber, setAdressNumber] = useState('');
 
   async function searchCep() {
-    const { data } = await axios.get(`https://viacep.com.br/ws/${info.zipCode}/json/`);
-    setInfo({
-      ...info, street: data.logradouro, state: data.uf, city: data.localidade,
-    });
+    const { data } = await axios.get(`https://viacep.com.br/ws/${zipCode}/json/`);
+    setState(data.uf);
+    setStreet(data.logradouro);
+    setCity(data.localidade);
+  }
+
+  function clearInputs() {
+    setAdressNumber('');
+    setCity('');
+    setCurrentCapacity('');
+    setEmail('');
+    setMaxCapacity('');
+    setName('');
+    setPassword('');
+    setState('');
+    setStreet('');
+    setZipCode('');
   }
 
   async function handleCreateGym() {
-    await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
-      ...info,
-      currentCapacity: Number(info.currentCapacity),
-      maxCapacity: Number(info.maxCapacity),
-      zipCode: Number(info.zipCode),
-      adressNumber: Number(info.adressNumber),
+    const res = await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
+      name,
+      currentCapacity: Number(currentCapacity),
+      maxCapacity: Number(currentCapacity),
+      email,
+      password,
+      zipCode: Number(zipCode),
+      state,
+      city,
+      street,
+      adressNumber: Number(adressNumber),
     }, config);
+    clearInputs();
   }
 
-  if (info.zipCode.length >= 8) {
+  if (zipCode.length >= 8) {
     searchCep();
   }
+
+  document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      handleCreateGym();
+    }
+  });
 
   return (
     <div className="flex justify-center mt-16">
@@ -46,10 +78,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, name: e.target.value });
+                setName(e.target.value);
               }}
-              value={info.name}
+              value={name}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -60,9 +91,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                setInfo({ ...info, currentCapacity: e.target.value });
+                setCurrentCapacity(e.target.value);
               }}
-              value={info.currentCapacity}
+              value={currentCapacity}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -71,9 +102,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                setInfo({ ...info, maxCapacity: e.target.value });
+                setMaxCapacity(e.target.value);
               }}
-              value={info.maxCapacity}
+              value={maxCapacity}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -84,10 +115,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, email: e.target.value });
+                setEmail(e.target.value);
               }}
-              value={info.email}
+              value={email}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -96,10 +126,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, password: e.target.value });
+                setPassword(e.target.value);
               }}
-              value={info.password}
+              value={password}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -110,9 +139,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                setInfo({ ...info, zipCode: e.target.value });
+                setZipCode(e.target.value);
               }}
-              value={info.zipCode}
+              value={zipCode}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -121,10 +150,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, state: e.target.value });
+                setState(e.target.value);
               }}
-              value={info.state}
+              value={state}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -135,10 +163,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, city: e.target.value });
+                setCity(e.target.value);
               }}
-              value={info.city}
+              value={city}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -147,10 +174,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, street: e.target.value });
+                setStreet(e.target.value);
               }}
-              value={info.street}
+              value={street}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
@@ -159,10 +185,9 @@ export default function NewGym() {
             <input
               type="text"
               onChange={(e) => {
-                // setName(e.target.value);
-                setInfo({ ...info, adressNumber: e.target.value });
+                setAdressNumber(e.target.value);
               }}
-              value={info.adressNumber}
+              value={adressNumber}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>

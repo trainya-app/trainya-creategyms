@@ -11,12 +11,19 @@ export default function Login() {
   const navigate = useNavigate();
 
   function verifyLogin() {
-    if (sendEmail !== email && sendPass !== pass) {
+    if (sendEmail !== email || sendPass !== pass) {
       setError('Login incorreto! Tente novamente');
     } else {
       navigate('/NewGym');
     }
   }
+
+  document.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      verifyLogin();
+    }
+  });
+
   return (
     <div className="flex justify-center mt-32">
       <div className="w-full max-w-lg flex items-center justify-center flex-col bg-[#05142D] border border-gray-800 rounded-2xl text-white px-12 py-16">
@@ -48,7 +55,7 @@ export default function Login() {
           <span className="text-red-500">{error}</span>
         </div>
         <div className="w-full bg-[#1753B2] hover:bg-[#2960b9] active:bg-[#0d4cb0] py-3 px-4 font-semibold text-lg rounded-lg">
-          <button onClick={verifyLogin} type="submit" className="w-full  flex items-center justify-center">
+          <button onClick={verifyLogin} type="submit" className="w-full  flex items-center justify-center" id="submit">
             <span className="opacity-90">Entrar</span>
           </button>
         </div>
