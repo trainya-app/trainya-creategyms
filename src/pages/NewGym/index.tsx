@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { isSomeEmpty } from '../../utils/isSomeEmpty';
 
 export default function NewGym() {
   const config = {
     headers: {
-
       authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjY2ODM3Njc3LCJleHAiOjE2Njk0Mjk2Nzd9.kMtMa-SeI-xpovIV9AE10-b0FdD8ECy-6MpU1TQ8OvY',
     },
   };
@@ -18,12 +18,19 @@ export default function NewGym() {
   const [city, setCity] = useState('');
   const [street, setStreet] = useState('');
   const [adressNumber, setAdressNumber] = useState('');
+  const [empty, setEmpty] = useState(false);
+  const [notNumber, setNotNumber] = useState(false);
+  const [zipCodeErr, setZipCodeErr] = useState(false);
 
   async function searchCep() {
     const { data } = await axios.get(`https://viacep.com.br/ws/${zipCode}/json/`);
     setState(data.uf);
     setStreet(data.logradouro);
     setCity(data.localidade);
+  }
+
+  function isNumber(n: any) {
+    return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
   }
 
   function clearInputs() {
@@ -40,7 +47,27 @@ export default function NewGym() {
   }
 
   async function handleCreateGym() {
-    const res = await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
+    const someFieldIsEmpty = isSomeEmpty([name, currentCapacity, maxCapacity, email, password,
+      zipCode, state, city, street, adressNumber]);
+    if (someFieldIsEmpty) {
+      return setEmpty(true);
+    }
+    if (!someFieldIsEmpty) {
+      setEmpty(false);
+    }
+
+    if (!isNumber(currentCapacity) || !isNumber(maxCapacity) || !isNumber(zipCode)
+    || !isNumber(adressNumber)) {
+      setNotNumber(true);
+    }
+    setNotNumber(false);
+
+    if (zipCode.length < 8) {
+      return setZipCodeErr(true);
+    }
+    setZipCodeErr(false);
+
+    await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
       name,
       currentCapacity: Number(currentCapacity),
       maxCapacity: Number(currentCapacity),
@@ -52,7 +79,7 @@ export default function NewGym() {
       street,
       adressNumber: Number(adressNumber),
     }, config);
-    clearInputs();
+    return clearInputs();
   }
 
   if (zipCode.length >= 8) {
@@ -192,6 +219,9 @@ export default function NewGym() {
             />
           </div>
         </div>
+        {empty && <span className="text-red-500 mb-4">Preencha todos os campos e tente novamente!</span>}
+        {notNumber && <span className="text-red-500 mb-4">Os campos de Capacidade, CEP e número precisam ser números</span>}
+        {zipCodeErr && <span className="text-red-500 mb-4">Digite um CEP válido</span>}
         <div className="w-full bg-[#1753B2] hover:bg-[#2960b9] active:bg-[#0d4cb0] py-3 px-4 font-semibold text-lg rounded-lg">
           <button type="submit" onClick={handleCreateGym} className="w-full  flex items-center justify-center">
             <span className="opacity-90">Cadastrar</span>

@@ -26,5 +26,6 @@ module.exports = {
     'import/extensions': 0,
     'import/no-unresolved': 0,
     'react/jsx-no-bind': 0,
+    'import/prefer-default-export': 0,
   },
 };
