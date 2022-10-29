@@ -56,9 +56,9 @@ export default function NewGym() {
       setEmpty(false);
     }
 
-    if (!isNumber(currentCapacity) || !isNumber(maxCapacity) || !isNumber(zipCode)
+    if (isNumber(currentCapacity) || !isNumber(maxCapacity) || !isNumber(zipCode)
     || !isNumber(adressNumber)) {
-      setNotNumber(true);
+      return setNotNumber(true);
     }
     setNotNumber(false);
 
