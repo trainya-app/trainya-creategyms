@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import isEmailValid from '../../utils/isEmailValid';
 import { isSomeEmpty } from '../../utils/isSomeEmpty';
 
 export default function NewGym() {
@@ -19,18 +20,14 @@ export default function NewGym() {
   const [street, setStreet] = useState('');
   const [adressNumber, setAdressNumber] = useState('');
   const [empty, setEmpty] = useState(false);
-  const [notNumber, setNotNumber] = useState(false);
   const [zipCodeErr, setZipCodeErr] = useState(false);
+  const [emailErr, setEmailErr] = useState(false);
 
   async function searchCep() {
     const { data } = await axios.get(`https://viacep.com.br/ws/${zipCode}/json/`);
     setState(data.uf);
     setStreet(data.logradouro);
     setCity(data.localidade);
-  }
-
-  function isNumber(n: any) {
-    return !Number.isNaN(parseFloat(n)) && Number.isFinite(n);
   }
 
   function clearInputs() {
@@ -56,11 +53,9 @@ export default function NewGym() {
       setEmpty(false);
     }
 
-    if (isNumber(currentCapacity) || !isNumber(maxCapacity) || !isNumber(zipCode)
-    || !isNumber(adressNumber)) {
-      return setNotNumber(true);
+    if (!isEmailValid(email)) {
+      return setEmailErr(true);
     }
-    setNotNumber(false);
 
     if (zipCode.length < 8) {
       return setZipCodeErr(true);
@@ -220,8 +215,8 @@ export default function NewGym() {
           </div>
         </div>
         {empty && <span className="text-red-500 mb-4">Preencha todos os campos e tente novamente!</span>}
-        {notNumber && <span className="text-red-500 mb-4">Os campos de Capacidade, CEP e número precisam ser números</span>}
         {zipCodeErr && <span className="text-red-500 mb-4">Digite um CEP válido</span>}
+        {emailErr && <span className="text-red-500 mb-4">O formato do e-mail não é válido</span>}
         <div className="w-full bg-[#1753B2] hover:bg-[#2960b9] active:bg-[#0d4cb0] py-3 px-4 font-semibold text-lg rounded-lg">
           <button type="submit" onClick={handleCreateGym} className="w-full  flex items-center justify-center">
             <span className="opacity-90">Cadastrar</span>
