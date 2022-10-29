@@ -71,18 +71,18 @@ export default function NewGym() {
     }
     setZipCodeErr(false);
 
-    // await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
-    //   name,
-    //   currentCapacity: Number(currentCapacity),
-    //   maxCapacity: Number(currentCapacity),
-    //   email,
-    //   password,
-    //   zipCode: Number(zipCode),
-    //   state,
-    //   city,
-    //   street,
-    //   adressNumber: Number(adressNumber),
-    // }, config);
+    await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
+      name,
+      currentCapacity: Number(currentCapacity),
+      maxCapacity: Number(currentCapacity),
+      email,
+      password,
+      zipCode: Number(zipCode),
+      state,
+      city,
+      street,
+      adressNumber: Number(adressNumber),
+    }, config);
     return clearInputs();
   }
 
