@@ -43,12 +43,12 @@ export default function ListGyms() {
       <div className="w-full max-w-xl flex items-center justify-center flex-col bg-[#05142D] border border-gray-800 rounded-2xl text-white px-12 py-8">
         <div className="flex w-full items-center border-b-[0.5px] border-gray-800 pb-4 justify-between">
           <h1 className="font-bold text-2xl">Listagem de academias</h1>
-          <Link to="/NewGym" className="border-2 p-2 border-gray-500 bg-[#0b1d3d] hover:scale-[1.01] hover:bg-[#13284c]">
+          <Link to="/NewGym" className="border-2 p-2 border-gray-500 bg-[#0b1d3d] hover:scale-[1.01] hover:bg-[#13284c] rounded-lg">
             Cadastrar academias
           </Link>
         </div>
         <Swiper
-          className="flex mt-4 w-full  flex-col"
+          className="flex mt-8 w-full  flex-col"
           spaceBetween={50}
           slidesPerView={1}
           modules={[Pagination, Navigation]}
@@ -70,10 +70,10 @@ export default function ListGyms() {
           )}
 
           {gyms.map((gym) => (
-            <SwiperSlide className="w-full py-6 px-10 flex items-center justify-center bg-[#0b1d3d]  rounded-tl-3xl rounded-br-3xl">
+            <SwiperSlide className="w-full py-6 px-10 flex items-center justify-center bg-[#0b1d3d]  rounded-lg">
               <div className="flex items-center flex-col">
                 <h1 className="font-bold text-3xl uppercase">{gym.name}</h1>
-                <div className="text-lg">
+                <div className="text-lg flex gap-2 flex-col">
                   <div className="flex flex-row gap-2 mt-4">
                     <h1>{gym.street}</h1>
                     <h1>{gym.adress_number}</h1>
