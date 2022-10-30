@@ -11,7 +11,6 @@ export default function Login() {
 
   const [sendEmail, setSendEmail] = useState('');
   const [sendPass, setSendPass] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   function navigateTo() {
@@ -20,13 +19,14 @@ export default function Login() {
 
   function verifyLogin() {
     if (sendEmail !== email || sendPass !== pass) {
-      setError('Login incorreto! Tente novamente');
-    } else {
-      setTimeout(navigateTo, 2100);
-      toast.success('Logado !', {
+      return toast.error('Credenciais incorretas !', {
         position: toast.POSITION.BOTTOM_CENTER,
       });
     }
+    setTimeout(navigateTo, 2100);
+    return toast.success('Logado !', {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   }
 
   document.addEventListener('keypress', (e) => {
@@ -64,7 +64,6 @@ export default function Login() {
               placeholder="Senha"
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
-            <span className="text-red-500">{error}</span>
           </div>
           <div className="w-full bg-[#1753B2] hover:bg-[#2960b9] active:bg-[#0d4cb0] py-3 px-4 font-semibold text-lg rounded-lg">
             <button onClick={verifyLogin} type="submit" className="w-full  flex items-center justify-center" id="submit">
