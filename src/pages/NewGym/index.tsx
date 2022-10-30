@@ -120,8 +120,8 @@ export default function NewGym() {
             />
           </div>
         </div>
-        <div className="flex gap-2 flex-row w-full mb-7">
-          <div className="w-2/4 flex flex-col gap-1">
+        <div className="flex gap-2 md:flex-row w-full mb-7 flex-col">
+          <div className="md:w-2/4 w-full flex flex-col gap-1">
             <span>Capacidade atual *</span>
             <input
               type="text"
@@ -132,7 +132,7 @@ export default function NewGym() {
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
-          <div className="w-2/4 flex flex-col gap-1">
+          <div className="md:w-2/4 w-full flex flex-col gap-1">
             <span>Capacidade máxima *</span>
             <input
               type="text"
@@ -144,8 +144,8 @@ export default function NewGym() {
             />
           </div>
         </div>
-        <div className="flex gap-2 flex-row w-full mb-7">
-          <div className="w-2/4 flex flex-col gap-1">
+        <div className="flex gap-2 md:flex-row w-full mb-7 flex-col">
+          <div className="md:w-2/4 w-full flex flex-col gap-1">
             <span>E-mail *</span>
             <input
               type="text"
@@ -156,7 +156,7 @@ export default function NewGym() {
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
-          <div className="w-2/4 flex flex-col gap-1">
+          <div className="md:w-2/4 w-full flex flex-col gap-1">
             <span>Senha *</span>
             <input
               type="text"
@@ -168,8 +168,8 @@ export default function NewGym() {
             />
           </div>
         </div>
-        <div className="flex gap-2 flex-row w-full mb-7">
-          <div className="w-2/4 flex flex-col gap-1">
+        <div className="flex gap-2 md:flex-row w-full mb-7 flex-col">
+          <div className="md:w-2/4 w-full flex flex-col gap-1">
             <span>CEP *</span>
             <input
               type="text"
@@ -180,7 +180,7 @@ export default function NewGym() {
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
           </div>
-          <div className="w-2/4 flex flex-col gap-1">
+          <div className="md:w-2/4 w-full flex flex-col gap-1">
             <span>Estado *</span>
             <input
               type="text"
@@ -192,7 +192,7 @@ export default function NewGym() {
             />
           </div>
         </div>
-        <div className="flex gap-2 flex-row w-full mb-7">
+        <div className="gap-2 flex-row w-full mb-7 hidden md:flex">
           <div className="w-2/5 flex flex-col gap-1">
             <span>Cidade *</span>
             <input
@@ -225,6 +225,44 @@ export default function NewGym() {
               value={adressNumber}
               className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
             />
+          </div>
+        </div>
+
+        <div className="gap-2 flex-col w-full mb-7 flex md:hidden">
+          <div className="w-full flex flex-col gap-1">
+            <span>Cidade *</span>
+            <input
+              type="text"
+              onChange={(e) => {
+                setCity(e.target.value);
+              }}
+              value={city}
+              className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
+            />
+          </div>
+          <div className="flex flex-row gap-2">
+            <div className="w-3/4 flex flex-col gap-1">
+              <span>Endereço *</span>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setStreet(e.target.value);
+                }}
+                value={street}
+                className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
+              />
+            </div>
+            <div className="w-1/4 flex flex-col gap-1">
+              <span>Num. *</span>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setAdressNumber(e.target.value);
+                }}
+                value={adressNumber}
+                className="bg-transparent py-3 px-4 font-semibold w-full outline-0 border-[1px] focus:border-[#2176FF] border-gray-800  rounded-xl"
+              />
+            </div>
           </div>
         </div>
         {empty && <span className="text-red-500 mb-4">Preencha todos os campos e tente novamente!</span>}
