@@ -24,10 +24,6 @@ export default function NewGym() {
   const [city, setCity] = useState('');
   const [street, setStreet] = useState('');
   const [adressNumber, setAdressNumber] = useState('');
-  const [empty, setEmpty] = useState(false);
-  const [zipCodeErr, setZipCodeErr] = useState(false);
-  const [emailErr, setEmailErr] = useState(false);
-  const [notNumber, setNotNumber] = useState(false);
 
   async function searchCep() {
     const { data } = await axios.get(`https://viacep.com.br/ws/${zipCode}/json/`);
@@ -59,27 +55,21 @@ export default function NewGym() {
     const someFieldIsEmpty = isSomeEmpty([name, currentCapacity, maxCapacity, email, password,
       zipCode, state, city, street, adressNumber]);
     if (someFieldIsEmpty) {
-      return setEmpty(true);
-    }
-    if (!someFieldIsEmpty) {
-      setEmpty(false);
+      return toast.error('Preencha todos os campos!');
     }
 
     if (!isNumeric(currentCapacity) || !isNumeric(maxCapacity) || !isNumeric(zipCode)
     || !isNumeric(adressNumber)) {
-      return setNotNumber(true);
+      return toast.error('Os campos de Capacidade, CEP e Número precisam ser números!');
     }
-    setNotNumber(false);
 
     if (!isEmailValid(email)) {
-      return setEmailErr(true);
+      return toast.error('O formato do e-mail é inválido!');
     }
-    setEmailErr(false);
 
     if (zipCode.length < 8) {
-      return setZipCodeErr(true);
+      return toast.error('O tamanho do CEP é inválido !');
     }
-    setZipCodeErr(false);
 
     try {
       await axios.post('https://trainya-app-api.herokuapp.com/gyms', {
@@ -282,10 +272,6 @@ export default function NewGym() {
               </div>
             </div>
           </div>
-          {empty && <span className="text-red-500 mb-4">Preencha todos os campos e tente novamente!</span>}
-          {zipCodeErr && <span className="text-red-500 mb-4">Digite um CEP válido.</span>}
-          {emailErr && <span className="text-red-500 mb-4">O formato do e-mail não é válido.</span>}
-          {notNumber && <span className="text-red-500 mb-4">Os campos de Capacidade, CEP e Número precisam ser números.</span>}
           <div className="w-full bg-[#1753B2] hover:bg-[#2960b9] active:bg-[#0d4cb0] py-3 px-4 font-semibold text-lg rounded-lg">
             <button type="submit" onClick={handleCreateGym} className="w-full  flex items-center justify-center">
               <span className="opacity-90">Cadastrar</span>
