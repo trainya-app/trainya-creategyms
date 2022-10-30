@@ -97,12 +97,6 @@ export default function NewGym() {
     searchCep();
   }
 
-  document.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      handleCreateGym();
-    }
-  });
-
   return (
     <>
       <div className="flex justify-center mt-0">

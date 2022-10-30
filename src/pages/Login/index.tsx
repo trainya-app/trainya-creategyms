@@ -29,12 +29,6 @@ export default function Login() {
     });
   }
 
-  document.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      verifyLogin();
-    }
-  });
-
   return (
     <>
       <div className="flex justify-center mt-32">
