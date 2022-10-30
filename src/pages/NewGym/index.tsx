@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import isEmailValid from '../../utils/isEmailValid';
 import { isSomeEmpty } from '../../utils/isSomeEmpty';
 import { isNumeric } from '../../utils/isNumber';
@@ -97,10 +98,13 @@ export default function NewGym() {
   });
 
   return (
-    <div className="flex justify-center mt-16">
-      <div className="w-full max-w-3xl flex items-center justify-center flex-col bg-[#05142D] border border-gray-800 rounded-2xl text-white px-12 py-16">
-        <div className="flex w-full items-center justify-center border-b-[0.5px] border-gray-800 pb-4">
+    <div className="flex justify-center mt-0">
+      <div className="w-full max-w-3xl flex items-center justify-center flex-col bg-[#05142D] border border-gray-800 rounded-2xl text-white px-12 py-8">
+        <div className="flex w-full items-center border-b-[0.5px] border-gray-800 pb-4 justify-between">
           <h1 className="font-bold text-3xl">Cadastrar academias</h1>
+          <Link to="/List" className="border-2 p-2 border-gray-500 bg-[#0b1d3d] hover:scale-[1.01] hover:bg-[#13284c]">
+            Ver academias
+          </Link>
         </div>
         <div className="flex flex-row gap-1 text-sm items-center opacity-50 mt-1 mb-6" />
         <div className="flex gap-2 flex-row w-full mb-7">
