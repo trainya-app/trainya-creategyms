@@ -279,7 +279,6 @@ export default function NewGym() {
           </div>
         </div>
       </div>
-      <button onClick={createdToast} type="submit">Enviar</button>
       <ToastContainer autoClose={2000} />
     </>
   );
