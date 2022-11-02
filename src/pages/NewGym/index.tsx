@@ -71,7 +71,7 @@ export default function NewGym() {
       return toast.error('O tamanho do CEP é inválido !');
     }
 
-    if (Number(maxCapacity) <= 0 || Number(currentCapacity) <= 0) {
+    if (Number(maxCapacity) <= 0 || Number(currentCapacity) < 0) {
       return toast.error('Capacidade precisa ser um número maior que 0');
     }
 
